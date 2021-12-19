@@ -7,7 +7,7 @@
 
 #include <gtkmm.h>
 #include "Functions.h"
-#include "Figures.h"
+#include "IFigures.h"
 
 constexpr int DEFAULT_WIDTH = 500;
 constexpr int DEFAULT_HEIGHT = 500;
