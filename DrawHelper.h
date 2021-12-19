@@ -18,6 +18,8 @@ class DrawHelper : public Gtk::DrawingArea {
             None,
             Rectangle,
             Circle,
+            Triangle,
+            Ring,
         };
 
         DrawHelper() {
@@ -57,6 +59,14 @@ class DrawHelper : public Gtk::DrawingArea {
             if(mCurrentFigure == Figure::Circle) {
                 DrawCircle(pContext, mStartX, mStartY, mWidth);
             }
+
+            if(mCurrentFigure == Figure::Triangle) {
+                DrawTriangle(pContext, mStartX, mStartY, mEndX, mEndY);
+            }
+
+            if(mCurrentFigure == Figure::Ring) {
+                DrawRing(pContext, mStartX, mStartY, mWidth);
+            }
             return false;
         }
 
@@ -86,6 +96,14 @@ class DrawHelper : public Gtk::DrawingArea {
 
             if(mCurrentFigure == Figure::Circle) {
                 mAlreadyDrawn.push_back(std::make_unique<Circle>(mStartX, mStartY, mWidth));
+            }
+
+            if(mCurrentFigure == Figure::Triangle) {
+                mAlreadyDrawn.push_back(std::make_unique<Triangle>(mStartX, mStartY, mEndX, mEndY));
+            }
+
+            if(mCurrentFigure == Figure::Ring) {
+                mAlreadyDrawn.push_back(std::make_unique<Ring>(mStartX, mStartY, mWidth));
             }
             return true;
         }

@@ -20,7 +20,35 @@ void DrawCircle(const Cairo::RefPtr<Cairo::Context>& pContext, double pStartX, d
 
         pContext->set_line_width(LINE_WIDTH);
         pContext->set_source_rgba(0, 0, 1, 1);
-        pContext->arc(pStartX, pStartY, pWidth, 0, 5 * M_PI);
+        pContext->arc(pStartX, pStartY, pWidth, 0, 2 * M_PI);
+        pContext->stroke();
+
+        pContext->restore();
+}
+
+void DrawTriangle(const Cairo::RefPtr<Cairo::Context>& pContext, double pmX1, double pmY1, double pmX2, double pmY2) {
+        pContext->save();
+
+        pContext->set_line_width(LINE_WIDTH);
+        pContext->set_source_rgba(0, 0, 1, 1);
+        
+        pContext->move_to(pmX1, pmY1);
+        pContext->line_to(pmX1, pmY2);
+        pContext->line_to(pmX2, pmY2);
+        pContext->line_to(pmX1, pmY1);
+        pContext->stroke();
+
+        pContext->restore();
+}
+
+void DrawRing(const Cairo::RefPtr<Cairo::Context>& pContext, double pStartX, double pStartY, double pWidth) {
+        pContext->save();
+
+        pContext->set_line_width(LINE_WIDTH);
+        pContext->set_source_rgba(0, 0, 1, 1);
+        pContext->arc(pStartX, pStartY, pWidth, 0, 2 * M_PI);
+        pContext->stroke();
+        pContext->arc(pStartX, pStartY, pWidth*2, 0, 2 * M_PI);
         pContext->stroke();
 
         pContext->restore();
