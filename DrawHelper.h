@@ -40,7 +40,7 @@ class DrawHelper : public Gtk::DrawingArea {
 
         // Вся отрисовка фигур происходит здесь:
         bool on_draw(const Cairo::RefPtr<Cairo::Context>& pContext) override {
-
+            
             if(!mBuffer){
                 mBuffer = Gdk::Pixbuf::create(Gdk::COLORSPACE_RGB,1,8,DEFAULT_WIDTH,DEFAULT_HEIGHT);
             }
@@ -82,6 +82,7 @@ class DrawHelper : public Gtk::DrawingArea {
             mEndY = pEvent->y;
 
             mWidth  = mEndX - mStartX;
+            
             mHeight = mEndY - mStartY;
 
             queue_draw();

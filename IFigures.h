@@ -28,38 +28,20 @@ private:
     double mHeight;
 };
 
-
-// class DrawableCircle : public DrawableShape2D {
-//     Shapes::Circle c;
-// public:
-//     const unsigned int ID;
-//     DrawableCircle(Shapes::Circle a) : c(a.GetR()), ID(ID_counter++) {
-//         c = a;
-//     }
-//     virtual void Draw(wxDC& dc) {
-//         //wxLogMessage("drawing circle, id: %d, coords: %f, %f", ID, coords.x, coords.y);
-//         dc.DrawCircle(coords.x, coords.y, c.GetR() * 10);
-//     }
-//     virtual std::string GetIDTypeString();
-//     virtual std::string GetFullInfoString();
-//     virtual wxRect GetHitArea();
-// };
-
-
 class ICircle : public IFigures {
-    Figures::Circle c;
 public:    
-    ICircle(Figures::Circle a, double pcX, double pcY): c(a.GetR()), mcX{pcX}, mcY{pcY}{
-        c = a;
+    ICircle(Figures::Circle c, double pcX, double pcY): mcX{pcX}, mcY{pcY}, mcR{c.GetR()}{
+        
     }
 
     void Draw(const Cairo::RefPtr<Cairo::Context>& pContext) override {
-        DrawCircle(pContext, mcX, mcY, c.GetR());
+        DrawCircle(pContext, mcX, mcY, mcR);
     }
 
 private:
     double mcX;
     double mcY;
+    double mcR;
 };
 
 class ITriangle : public IFigures {
