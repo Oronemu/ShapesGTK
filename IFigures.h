@@ -1,8 +1,8 @@
 // Интерфейс фигур
 // Все формы реализуют метод рисования, в котором логика рисования сохраняется
 
-
 #include "Functions.h"
+#include "Figures.h"
 
 class IFigures {
 public:
@@ -11,9 +11,9 @@ public:
     virtual void Draw(const Cairo::RefPtr<Cairo::Context>& pContext) = 0;
 };
 
-class Rectangle : public IFigures {
+class IRectangle : public IFigures {
 public:
-    Rectangle(double pLeft, double pUp, double pWidth, double pHeight): mLeft{pLeft}, mUp{pUp}, mWidth{pWidth}, mHeight{pHeight} {
+    IRectangle(double pLeft, double pUp, double pWidth, double pHeight): mLeft{pLeft}, mUp{pUp}, mWidth{pWidth}, mHeight{pHeight} {
 
     }
 
@@ -28,25 +28,43 @@ private:
     double mHeight;
 };
 
-class Circle : public IFigures {
-public:    
-    Circle(double pcX, double pcY, double pRadius): mcX{pcX}, mcY{pcY}, mRadius{pRadius}{
 
+// class DrawableCircle : public DrawableShape2D {
+//     Shapes::Circle c;
+// public:
+//     const unsigned int ID;
+//     DrawableCircle(Shapes::Circle a) : c(a.GetR()), ID(ID_counter++) {
+//         c = a;
+//     }
+//     virtual void Draw(wxDC& dc) {
+//         //wxLogMessage("drawing circle, id: %d, coords: %f, %f", ID, coords.x, coords.y);
+//         dc.DrawCircle(coords.x, coords.y, c.GetR() * 10);
+//     }
+//     virtual std::string GetIDTypeString();
+//     virtual std::string GetFullInfoString();
+//     virtual wxRect GetHitArea();
+// };
+
+
+class ICircle : public IFigures {
+    Figures::Circle c;
+public:    
+    ICircle(Figures::Circle a, double pcX, double pcY): c(a.GetR()), mcX{pcX}, mcY{pcY}{
+        c = a;
     }
 
     void Draw(const Cairo::RefPtr<Cairo::Context>& pContext) override {
-        DrawCircle(pContext, mcX, mcY, mRadius);
+        DrawCircle(pContext, mcX, mcY, c.GetR());
     }
 
 private:
     double mcX;
     double mcY;
-    double mRadius;
 };
 
-class Triangle : public IFigures {
+class ITriangle : public IFigures {
 public:    
-    Triangle(double ptX1, double ptY1, double ptX2, double ptY2): mtX1{ptX1}, mtY1{ptY1}, mtX2{ptX2}, mtY2{ptY2}{
+    ITriangle(double ptX1, double ptY1, double ptX2, double ptY2): mtX1{ptX1}, mtY1{ptY1}, mtX2{ptX2}, mtY2{ptY2}{
 
     }
 
@@ -61,9 +79,9 @@ private:
     double mtY2;
 };
 
-class Ring : public IFigures {
+class IRing : public IFigures {
 public:    
-    Ring(double pcX, double pcY, double pRadius): mcX{pcX}, mcY{pcY}, mRadius{pRadius}{
+    IRing(double pcX, double pcY, double pRadius): mcX{pcX}, mcY{pcY}, mRadius{pRadius}{
 
     }
 

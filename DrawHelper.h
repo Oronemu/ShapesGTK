@@ -91,19 +91,19 @@ class DrawHelper : public Gtk::DrawingArea {
 
         bool OnButtonReleased(GdkEventButton* pEvent) {
             if(mCurrentFigure == Figure::Rectangle) {
-                mAlreadyDrawn.push_back(std::make_unique<Rectangle>(mStartX, mStartY, mWidth, mHeight));
+                mAlreadyDrawn.push_back(std::make_unique<IRectangle>(mStartX, mStartY, mWidth, mHeight));
             }
 
             if(mCurrentFigure == Figure::Circle) {
-                mAlreadyDrawn.push_back(std::make_unique<Circle>(mStartX, mStartY, mWidth));
+                mAlreadyDrawn.push_back(std::make_unique<ICircle>(mStartX, mStartY, mWidth));
             }
 
             if(mCurrentFigure == Figure::Triangle) {
-                mAlreadyDrawn.push_back(std::make_unique<Triangle>(mStartX, mStartY, mEndX, mEndY));
+                mAlreadyDrawn.push_back(std::make_unique<ITriangle>(mStartX, mStartY, mEndX, mEndY));
             }
 
             if(mCurrentFigure == Figure::Ring) {
-                mAlreadyDrawn.push_back(std::make_unique<Ring>(mStartX, mStartY, mWidth));
+                mAlreadyDrawn.push_back(std::make_unique<IRing>(mStartX, mStartY, mWidth));
             }
             return true;
         }
