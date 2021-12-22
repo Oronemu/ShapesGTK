@@ -1,3 +1,5 @@
+#pragma once
+
 #include <gtkmm.h>
 #include "DrawHelper.h"
 
@@ -34,9 +36,8 @@ private:
     Gtk::Button mDrawCircleButton;
     Gtk::Button mDrawTriangleButton;
     Gtk::Button mDrawRingButton;
-
     DrawHelper mDrawArea;
-
+    
     void RectangleButtonClicked(){
         mDrawArea.SetCurrentShape(DrawHelper::Figure::Rectangle);
     }

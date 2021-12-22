@@ -3,6 +3,7 @@
 #include "DrawFunctions.h"
 #include "IFigures.h"
 #include "Figures.h"
+#include "Window.h"
 
 using namespace std;
 constexpr int DEFAULT_WIDTH = 500;
@@ -39,6 +40,13 @@ class DrawHelper : public Gtk::DrawingArea {
         Coords coords;
         std::vector<std::unique_ptr<IFigures>> mAlreadyDrawn;
 
+        void showInfoDialog(string secondaryMessage) {
+            Gtk::MessageDialog dialog("Информация", false, Gtk::MESSAGE_QUESTION, Gtk::BUTTONS_CANCEL);
+            dialog.set_secondary_text(secondaryMessage);
+            dialog.set_default_response(Gtk::RESPONSE_YES);
+            dialog.run();
+        }
+
         bool on_draw(const Cairo::RefPtr<Cairo::Context>& pContext) override {
             
             if(!mBuffer){
@@ -65,7 +73,7 @@ class DrawHelper : public Gtk::DrawingArea {
             }
 
             if(mCurrentFigure == Figure::Ring) {
-                DrawRing(pContext, coords.x, coords.y, mWidth, mWidth);
+                DrawRing(pContext, coords.x, coords.y, mWidth, mWidth*2);
             }
             return false;
         }
@@ -92,23 +100,38 @@ class DrawHelper : public Gtk::DrawingArea {
         bool OnButtonReleased(GdkEventButton* pEvent) {
             if(mCurrentFigure == Figure::Rectangle) {
                 Figures::Rectangle rectangle(mWidth, mHeight);
-                IRectangle irectangle(rectangle);
-                irectangle.setCoords(coords.x,coords.y);
-                mAlreadyDrawn.push_back(std::make_unique<IRectangle>(irectangle));
+                IRectangle iRectangle(rectangle);
+                iRectangle.setCoords(coords.x,coords.y);
+                mAlreadyDrawn.push_back(std::make_unique<IRectangle>(iRectangle));
+
+                showInfoDialog("Площадь: " + std::to_string(rectangle.CalcArea()) + 
+                               "\nПериметр: " + std::to_string(rectangle.CalcPerimeter()) +
+                               "\nШирина: " + std::to_string(mWidth) + "; Высота: " + std::to_string(mHeight) +
+                               "\nX1: " + std::to_string(coords.x) + "; Y1: " + std::to_string(coords.y));
             }
 
             if(mCurrentFigure == Figure::Circle) {
                 Figures::Circle circle(mWidth);
-                ICircle icircle(circle);
-                icircle.setCoords(coords.x,coords.y);
-                mAlreadyDrawn.push_back(std::make_unique<ICircle>(icircle));
+                ICircle iCircle(circle);
+                iCircle.setCoords(coords.x,coords.y);
+                mAlreadyDrawn.push_back(std::make_unique<ICircle>(iCircle));
+
+                showInfoDialog("Площадь: " + std::to_string(circle.CalcArea()) + 
+                               "\nПериметр: " + std::to_string(circle.CalcPerimeter()) +
+                               "\nРадиус: " + std::to_string(mWidth) +
+                               "\nX1: " + std::to_string(coords.x) + "; Y1: " + std::to_string(coords.y));
             }
 
             if(mCurrentFigure == Figure::Ring) {
-                Figures::Ring ring(mWidth, mWidth);
-                IRing iring(ring);
-                iring.setCoords(coords.x, coords.y);
-                mAlreadyDrawn.push_back(std::make_unique<IRing>(iring));
+                Figures::Ring ring(mWidth, mWidth*2);
+                IRing iRing(ring);
+                iRing.setCoords(coords.x, coords.y);
+                mAlreadyDrawn.push_back(std::make_unique<IRing>(iRing));
+
+                showInfoDialog("Площадь: " + std::to_string(ring.CalcArea()) + 
+                               "\nПериметр: " + std::to_string(ring.CalcPerimeter()) +
+                               "\nr: " + std::to_string(mWidth) + "; R: " + std::to_string(mWidth*2) + 
+                               "\nX1: " + std::to_string(coords.x) + "; Y1: " + std::to_string(coords.y));
             }
 
             if(mCurrentFigure == Figure::Triangle) {
