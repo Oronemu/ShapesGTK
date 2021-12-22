@@ -1,78 +1,66 @@
-// Интерфейс фигур
-// Все формы реализуют метод рисования, в котором логика рисования сохраняется
-
-#include "Functions.h"
+#include "DrawFunctions.h"
 #include "Figures.h"
 
+struct Coords {
+    double x;
+    double y;
+    Coords(double sX = 0, double sY = 0) : x{sX}, y{sY} {}
+};
+
 class IFigures {
+protected:
+    Coords coords;
 public:
     virtual ~IFigures() = default;
-
+    void setCoords(double, double);
+    void setCoords(Coords);
     virtual void Draw(const Cairo::RefPtr<Cairo::Context>& pContext) = 0;
 };
 
 class IRectangle : public IFigures {
+    Figures::Rectangle r;
 public:
-    IRectangle(double pLeft, double pUp, double pWidth, double pHeight): mLeft{pLeft}, mUp{pUp}, mWidth{pWidth}, mHeight{pHeight} {
-
+    IRectangle(Figures::Rectangle a): r(a.GetA(), a.GetB()) {
+        r = a;
     }
 
     void Draw(const Cairo::RefPtr<Cairo::Context>& pContext) override {
-        DrawRectangle(pContext, mLeft, mUp, mWidth, mHeight);
+        DrawRectangle(pContext, coords.x, coords.y, r.GetA(), r.GetB());
     }
-
-private:
-    double mUp;
-    double mLeft;
-    double mWidth;
-    double mHeight;
 };
 
 class ICircle : public IFigures {
+    Figures::Circle c;
 public:    
-    ICircle(Figures::Circle c, double pcX, double pcY): mcX{pcX}, mcY{pcY}, mcR{c.GetR()}{
-        
+    ICircle(Figures::Circle a): c{a.GetR()}{
+        c = a;
     }
 
     void Draw(const Cairo::RefPtr<Cairo::Context>& pContext) override {
-        DrawCircle(pContext, mcX, mcY, mcR);
+        DrawCircle(pContext, coords.x, coords.y, c.GetR());
     }
-
-private:
-    double mcX;
-    double mcY;
-    double mcR;
-};
-
-class ITriangle : public IFigures {
-public:    
-    ITriangle(double ptX1, double ptY1, double ptX2, double ptY2): mtX1{ptX1}, mtY1{ptY1}, mtX2{ptX2}, mtY2{ptY2}{
-
-    }
-
-    void Draw(const Cairo::RefPtr<Cairo::Context>& pContext) override {
-        DrawTriangle(pContext, mtX1, mtY1, mtX2, mtY2);
-    }
-
-private:
-    double mtX1;
-    double mtY1;
-    double mtX2;
-    double mtY2;
 };
 
 class IRing : public IFigures {
+    Figures::Ring r;
 public:    
-    IRing(double pcX, double pcY, double pRadius): mcX{pcX}, mcY{pcY}, mRadius{pRadius}{
-
+    IRing(Figures::Ring a): r(a.Getr(), a.GetR()){
+        r = a;
     }
 
     void Draw(const Cairo::RefPtr<Cairo::Context>& pContext) override {
-        DrawRing(pContext, mcX, mcY, mRadius);
+        DrawRing(pContext, coords.x, coords.y, r.Getr(), r.GetR());
     }
-
-private:
-    double mcX;
-    double mcY;
-    double mRadius;
 };
+
+// class ITriangle : public IFigures {
+//     Figures::Triangle t;
+// public:    
+//     ITriangle(Figures::Triangle a): mtX1{ptX1}, mtY1{ptY1}, mtX2{ptX2}, mtY2{ptY2}{
+//         t = a;
+//     }
+
+//     void Draw(const Cairo::RefPtr<Cairo::Context>& pContext) override {
+//         DrawTriangle(pContext, mtX1, mtY1, mtX2, mtY2);
+//     }
+// };

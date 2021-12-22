@@ -1,12 +1,13 @@
-// Основное окно, которое содержит все виджеты(Кнопки и прочее). Через них пользователь выбирает фигуру для отрисовки.
-
 #include <gtkmm.h>
 #include "DrawHelper.h"
 
 class MyWindow : public Gtk::Window {
 
 public:
-    MyWindow(): mDrawRectangleButton{"Квадрат"}, mDrawCircleButton{"Круг"}, mDrawTriangleButton("Треугольник"), mDrawRingButton("Кольцо"){
+    MyWindow(): mDrawRectangleButton{"Квадрат"}, 
+                mDrawCircleButton{"Круг"}, 
+                mDrawTriangleButton("Треугольник"), 
+                mDrawRingButton("Кольцо") {
         set_default_size(DEFAULT_WIDTH, DEFAULT_HEIGHT);
 
         mHeaderBar.set_show_close_button(true);

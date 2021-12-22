@@ -9,7 +9,6 @@ namespace Figures {
         virtual double CalcPerimeter() = 0;
     };
 
-
     class Circle : public Figure2D {
         double r;
     public:
@@ -32,5 +31,30 @@ namespace Figures {
         double GetA();
         double GetB();
     };
+
+    class Ring : public Figure2D {
+        double r, R;
+    public:
+        Ring(double, double);
+        virtual Figure2D* Clone();
+        virtual double CalcArea();
+        virtual double CalcPerimeter();
+        
+        double Getr();
+        double GetR();
+    };
+
+    // class Triangle : public Figure2D {
+    //     double a, b, c;
+    // public:
+    //     Triangle(double, double, double);
+    //     virtual Figure2D* Clone();
+    //     virtual double CalcArea();
+    //     virtual double CalcPerimeter();
+
+    //     double GetA();
+    //     double GetB();
+    //     double GetC();
+    // };
 
 };
