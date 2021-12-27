@@ -10,7 +10,6 @@ void DrawRectangle(const Cairo::RefPtr<Cairo::Context>& pContext, double pStartX
         pContext->set_line_width(LINE_WIDTH);
         pContext->set_source_rgba(0, 0, 1, 1);
         pContext->rectangle(pStartX, pStartY, pWidth, pHeight);
-
         pContext->stroke();
         pContext->restore();
 }

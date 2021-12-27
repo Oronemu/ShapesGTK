@@ -1,3 +1,6 @@
+#ifndef IFIGURES_H
+#define IFIGURES_H
+
 #include "DrawFunctions.h"
 #include "Figures.h"
 
@@ -64,3 +67,5 @@ public:
 //         DrawTriangle(pContext, mtX1, mtY1, mtX2, mtY2);
 //     }
 // };
+
+#endif

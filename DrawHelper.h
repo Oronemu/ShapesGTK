@@ -1,13 +1,17 @@
+#ifndef DRAWHELPER_H
+#define DRAWHELPER_H
+
 #include <gtkmm.h>
 #include <iostream>
+
 #include "DrawFunctions.h"
 #include "IFigures.h"
 #include "Figures.h"
-#include "Window.h"
+#include "WindowNotify.h"
 
 using namespace std;
-constexpr int DEFAULT_WIDTH = 500;
-constexpr int DEFAULT_HEIGHT = 500;
+constexpr int DEFAULT_WIDTH = 800;
+constexpr int DEFAULT_HEIGHT = 800;
 
 class DrawHelper : public Gtk::DrawingArea {
     public:
@@ -18,7 +22,6 @@ class DrawHelper : public Gtk::DrawingArea {
             Triangle,
             Ring,
         };
-
         DrawHelper() {
             add_events(Gdk::BUTTON1_MOTION_MASK | Gdk::BUTTON_PRESS_MASK | Gdk::BUTTON_RELEASE_MASK);
             signal_button_press_event().connect([this](GdkEventButton* pEvent){return OnButtonPressed(pEvent);});
@@ -28,6 +31,11 @@ class DrawHelper : public Gtk::DrawingArea {
 
         void SetCurrentShape(Figure pFigure) {
             mCurrentFigure = pFigure;
+        }
+        const Cairo::RefPtr<Cairo::Context> pContext;
+        void Clear() {
+            mAlreadyDrawn.clear();
+            queue_draw();
         }
 
     private: 
@@ -40,13 +48,6 @@ class DrawHelper : public Gtk::DrawingArea {
         Coords coords;
         std::vector<std::unique_ptr<IFigures>> mAlreadyDrawn;
 
-        void showInfoDialog(string secondaryMessage) {
-            Gtk::MessageDialog dialog("Информация", false, Gtk::MESSAGE_QUESTION, Gtk::BUTTONS_CANCEL);
-            dialog.set_secondary_text(secondaryMessage);
-            dialog.set_default_response(Gtk::RESPONSE_YES);
-            dialog.run();
-        }
-
         bool on_draw(const Cairo::RefPtr<Cairo::Context>& pContext) override {
             
             if(!mBuffer){
@@ -54,7 +55,7 @@ class DrawHelper : public Gtk::DrawingArea {
             }
 
             Gdk::Cairo::set_source_pixbuf(pContext, mBuffer, 0, 0);
-            pContext->paint();
+            pContext->paint();  
 
             for(const auto& figure : mAlreadyDrawn) {
                 figure->Draw(pContext);
@@ -144,3 +145,5 @@ class DrawHelper : public Gtk::DrawingArea {
         Figure mCurrentFigure = Figure::None;
         Glib::RefPtr<Gdk::Pixbuf> mBuffer;
 };
+
+#endif

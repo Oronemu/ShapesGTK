@@ -1,4 +1,5 @@
-#pragma once
+#ifndef WINDOW_H
+#define WINDOW_H
 
 #include <gtkmm.h>
 #include "DrawHelper.h"
@@ -9,33 +10,47 @@ public:
     MyWindow(): mDrawRectangleButton{"Квадрат"}, 
                 mDrawCircleButton{"Круг"}, 
                 mDrawTriangleButton("Треугольник"), 
-                mDrawRingButton("Кольцо") {
+                mDrawRingButton("Кольцо"),
+                mClearButton("Очистить") {
+
         set_default_size(DEFAULT_WIDTH, DEFAULT_HEIGHT);
 
         mHeaderBar.set_show_close_button(true);
-        mHeaderBar.pack_start(mDrawRectangleButton);
-        mHeaderBar.pack_start(mDrawCircleButton);;
-        mHeaderBar.pack_start(mDrawTriangleButton);;
-        mHeaderBar.pack_start(mDrawRingButton);;
+        mHeaderBar.set_title("ShapesGTK");
+        mHeaderBar.set_subtitle("Realese 2.0.0");
 
+        mBox.set_orientation(Gtk::ORIENTATION_VERTICAL);
+        mBox.pack_start(mToolBar,false,false);
+        mBox.pack_start(mDrawArea,true,true);
+
+        mToolBar.append(mDrawRectangleButton);
+        mToolBar.append(mDrawCircleButton);
+        mToolBar.append(mDrawTriangleButton);
+        mToolBar.append(mDrawRingButton);
+        mToolBar.append(mClearButton);
+        
         set_titlebar(mHeaderBar);
-        add(mDrawArea);
+        set_hide_titlebar_when_maximized(true);
+        add(mBox);
 
         mDrawRectangleButton.signal_clicked().connect([this](){RectangleButtonClicked();});
         mDrawCircleButton.signal_clicked().connect([this](){CircleButtonClicked();});
         mDrawTriangleButton.signal_clicked().connect([this](){TriangleButtonClicked();});
         mDrawRingButton.signal_clicked().connect([this](){RingButtonClicked();});
-
+        mClearButton.signal_clicked().connect([this](){ClearButtonClicked();});
         show_all();
     }
-
+    
 private:
 
     Gtk::HeaderBar mHeaderBar;
-    Gtk::Button mDrawRectangleButton;
-    Gtk::Button mDrawCircleButton;
-    Gtk::Button mDrawTriangleButton;
-    Gtk::Button mDrawRingButton;
+    Gtk::Box mBox;
+    Gtk::Toolbar mToolBar;
+    Gtk::ToolButton mDrawRectangleButton;
+    Gtk::ToolButton mDrawCircleButton;
+    Gtk::ToolButton mDrawTriangleButton;
+    Gtk::ToolButton mDrawRingButton;
+    Gtk::ToolButton mClearButton;
     DrawHelper mDrawArea;
     
     void RectangleButtonClicked(){
@@ -53,4 +68,10 @@ private:
     void RingButtonClicked(){
         mDrawArea.SetCurrentShape(DrawHelper::Figure::Ring);
     }
+
+    void ClearButtonClicked(){
+        mDrawArea.Clear();
+    }
 };
+
+#endif
