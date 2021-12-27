@@ -19,7 +19,7 @@ void DrawCircle(const Cairo::RefPtr<Cairo::Context>& pContext, double pStartX, d
 
         pContext->set_line_width(LINE_WIDTH);
         pContext->set_source_rgba(0, 0, 1, 1);
-        pContext->arc(pStartX, pStartY, pWidth, 0, 2 * M_PI);
+        pContext->arc(pStartX, pStartY, abs(pWidth), 0, 2 * M_PI);
 
         pContext->stroke();
         pContext->restore();
@@ -30,9 +30,9 @@ void DrawRing(const Cairo::RefPtr<Cairo::Context>& pContext, double pStartX, dou
 
         pContext->set_line_width(LINE_WIDTH);
         pContext->set_source_rgba(0, 0, 1, 1);
-        pContext->arc(pStartX, pStartY, pWidth, 0, 2 * M_PI);
+        pContext->arc(pStartX, pStartY, abs(pWidth), 0, 2 * M_PI);
         pContext->stroke();
-        pContext->arc(pStartX, pStartY, pWidth2, 0, 2 * M_PI);
+        pContext->arc(pStartX, pStartY, abs(pWidth2), 0, 2 * M_PI);
 
         pContext->stroke();
         pContext->restore();

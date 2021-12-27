@@ -17,7 +17,7 @@ public:
 
         mHeaderBar.set_show_close_button(true);
         mHeaderBar.set_title("ShapesGTK");
-        mHeaderBar.set_subtitle("Release 1.1.0");
+        mHeaderBar.set_subtitle("Release 1.1.1");
 
         mBox.set_orientation(Gtk::ORIENTATION_VERTICAL);
         mBox.pack_start(mToolBar,false,false);

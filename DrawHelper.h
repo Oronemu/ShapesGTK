@@ -105,9 +105,9 @@ class DrawHelper : public Gtk::DrawingArea {
                 iRectangle.setCoords(coords.x,coords.y);
                 mAlreadyDrawn.push_back(std::make_unique<IRectangle>(iRectangle));
 
-                showInfoDialog("Площадь: " + std::to_string(rectangle.CalcArea()) + 
-                               "\nПериметр: " + std::to_string(rectangle.CalcPerimeter()) +
-                               "\nШирина: " + std::to_string(mWidth) + "; Высота: " + std::to_string(mHeight) +
+                showInfoDialog("Площадь: " + std::to_string(abs(rectangle.CalcArea())) + 
+                               "\nПериметр: " + std::to_string(abs(rectangle.CalcPerimeter())) +
+                               "\nШирина: " + std::to_string(abs(mWidth)) + "; Высота: " + std::to_string(abs(mHeight)) +
                                "\nX1: " + std::to_string(coords.x) + "; Y1: " + std::to_string(coords.y));
             }
 
@@ -117,9 +117,9 @@ class DrawHelper : public Gtk::DrawingArea {
                 iCircle.setCoords(coords.x,coords.y);
                 mAlreadyDrawn.push_back(std::make_unique<ICircle>(iCircle));
 
-                showInfoDialog("Площадь: " + std::to_string(circle.CalcArea()) + 
-                               "\nПериметр: " + std::to_string(circle.CalcPerimeter()) +
-                               "\nРадиус: " + std::to_string(mWidth) +
+                showInfoDialog("Площадь: " + std::to_string(abs(circle.CalcArea())) + 
+                               "\nПериметр: " + std::to_string(abs(circle.CalcPerimeter())) +
+                               "\nРадиус: " + std::to_string(abs(mWidth)) +
                                "\nX1: " + std::to_string(coords.x) + "; Y1: " + std::to_string(coords.y));
             }
 
@@ -129,9 +129,9 @@ class DrawHelper : public Gtk::DrawingArea {
                 iRing.setCoords(coords.x, coords.y);
                 mAlreadyDrawn.push_back(std::make_unique<IRing>(iRing));
 
-                showInfoDialog("Площадь: " + std::to_string(ring.CalcArea()) + 
-                               "\nПериметр: " + std::to_string(ring.CalcPerimeter()) +
-                               "\nr: " + std::to_string(mWidth) + "; R: " + std::to_string(mWidth*2) + 
+                showInfoDialog("Площадь: " + std::to_string(abs(ring.CalcArea())) + 
+                               "\nПериметр: " + std::to_string(abs(ring.CalcPerimeter())) +
+                               "\nr: " + std::to_string(abs(mWidth)) + "; R: " + std::to_string(abs(mWidth*2)) + 
                                "\nX1: " + std::to_string(coords.x) + "; Y1: " + std::to_string(coords.y));
             }
 
