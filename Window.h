@@ -43,7 +43,7 @@ private:
     Gtk::Button mDrawCircleButton;
     Gtk::Button mDrawTriangleButton;
     Gtk::Button mDrawRingButton;
-    DrawHelper mDrawArea;
+    DrawHelper mDrawArea(DrawHelper::CreateNotifWindow<MyWindow>());
     
     void RectangleButtonClicked(){
         mDrawArea.SetCurrentShape(DrawHelper::Figure::Rectangle);

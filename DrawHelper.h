@@ -19,7 +19,14 @@ class DrawHelper : public Gtk::DrawingArea {
             Ring,
         };
 
-        DrawHelper() {
+        template <class T>
+        static T* CreateNotifWindow<T> () {
+            return new T();
+        }
+
+
+        DrawHelper(Gtk::Window* win) {
+            this->notifications = win;
             add_events(Gdk::BUTTON1_MOTION_MASK | Gdk::BUTTON_PRESS_MASK | Gdk::BUTTON_RELEASE_MASK);
             signal_button_press_event().connect([this](GdkEventButton* pEvent){return OnButtonPressed(pEvent);});
             signal_motion_notify_event().connect([this](GdkEventMotion* pEvent){return OnMouseMotion(pEvent);});
@@ -38,7 +45,7 @@ class DrawHelper : public Gtk::DrawingArea {
         double mHeight;
 
         Coords coords;
-        MyWindow notifications;
+        Gtk::Window* notifications;
 
         std::vector<std::unique_ptr<IFigures>> mAlreadyDrawn;
 
