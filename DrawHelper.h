@@ -38,14 +38,9 @@ class DrawHelper : public Gtk::DrawingArea {
         double mHeight;
 
         Coords coords;
-        std::vector<std::unique_ptr<IFigures>> mAlreadyDrawn;
+        MyWindow notifications;
 
-        void showInfoDialog(string secondaryMessage) {
-            Gtk::MessageDialog dialog("Информация", false, Gtk::MESSAGE_QUESTION, Gtk::BUTTONS_CANCEL);
-            dialog.set_secondary_text(secondaryMessage);
-            dialog.set_default_response(Gtk::RESPONSE_YES);
-            dialog.run();
-        }
+        std::vector<std::unique_ptr<IFigures>> mAlreadyDrawn;
 
         bool on_draw(const Cairo::RefPtr<Cairo::Context>& pContext) override {
             
@@ -104,7 +99,7 @@ class DrawHelper : public Gtk::DrawingArea {
                 iRectangle.setCoords(coords.x,coords.y);
                 mAlreadyDrawn.push_back(std::make_unique<IRectangle>(iRectangle));
 
-                showInfoDialog("Площадь: " + std::to_string(rectangle.CalcArea()) + 
+                notifications.showInfoDialog("Площадь: " + std::to_string(rectangle.CalcArea()) + 
                                "\nПериметр: " + std::to_string(rectangle.CalcPerimeter()) +
                                "\nШирина: " + std::to_string(mWidth) + "; Высота: " + std::to_string(mHeight) +
                                "\nX1: " + std::to_string(coords.x) + "; Y1: " + std::to_string(coords.y));
@@ -116,7 +111,7 @@ class DrawHelper : public Gtk::DrawingArea {
                 iCircle.setCoords(coords.x,coords.y);
                 mAlreadyDrawn.push_back(std::make_unique<ICircle>(iCircle));
 
-                showInfoDialog("Площадь: " + std::to_string(circle.CalcArea()) + 
+                notifications.showInfoDialog("Площадь: " + std::to_string(circle.CalcArea()) + 
                                "\nПериметр: " + std::to_string(circle.CalcPerimeter()) +
                                "\nРадиус: " + std::to_string(mWidth) +
                                "\nX1: " + std::to_string(coords.x) + "; Y1: " + std::to_string(coords.y));
@@ -128,7 +123,7 @@ class DrawHelper : public Gtk::DrawingArea {
                 iRing.setCoords(coords.x, coords.y);
                 mAlreadyDrawn.push_back(std::make_unique<IRing>(iRing));
 
-                showInfoDialog("Площадь: " + std::to_string(ring.CalcArea()) + 
+                notifications.showInfoDialog("Площадь: " + std::to_string(ring.CalcArea()) + 
                                "\nПериметр: " + std::to_string(ring.CalcPerimeter()) +
                                "\nr: " + std::to_string(mWidth) + "; R: " + std::to_string(mWidth*2) + 
                                "\nX1: " + std::to_string(coords.x) + "; Y1: " + std::to_string(coords.y));

@@ -29,6 +29,13 @@ public:
         show_all();
     }
 
+    void showInfoDialog(string secondaryMessage) {
+            Gtk::MessageDialog dialog("Информация", false, Gtk::MESSAGE_QUESTION, Gtk::BUTTONS_CANCEL);
+            dialog.set_secondary_text(secondaryMessage);
+            dialog.set_default_response(Gtk::RESPONSE_YES);
+            dialog.run();
+    }
+
 private:
 
     Gtk::HeaderBar mHeaderBar;
